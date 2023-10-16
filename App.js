@@ -6,6 +6,8 @@ import HomeScreen from "./src/screens/HomeScreen";
 import CreateTaskScreen from "./src/screens/CreateTaskScreen";
 import TimerScreen from "./src/screens/TimerScreen";
 import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { StatusBar } from "expo-status-bar"; 
+import styked from 'nativewind';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,9 +15,11 @@ export default function App(){
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator options={{
+          
+        }}>
           <Tab.Screen 
-            name="Taks" 
+            name="Cadastro de Tarefas" 
             component={CreateTaskScreen}
             options={{
               tabBarLabel: 'Tasks',
@@ -46,6 +50,7 @@ export default function App(){
           />
         </Tab.Navigator>
       </NavigationContainer>
+      <StatusBar />
     </PaperProvider>  
   );
 };
