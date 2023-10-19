@@ -10,6 +10,7 @@ const CreateTaskScreen = () => {
   const StyledSafeAreaView = styled(SafeAreaView);
   const StyledView = styled(View);
   const StyledText = styled(Text);
+  const StyledDateTimePicker = styled(DateTimePicker);
 
   const [currentDate, setCurrentDate] = useState('');
   const [task ,setTask] = useState('');
@@ -68,8 +69,20 @@ const CreateTaskScreen = () => {
       className="w-2/3 p-3 border-b-2 border-gray-500 focus:border-black"
       >
       </TextInput>
-      <DateTimePicker mode="time"/>
     </StyledView>
+    <StyledView
+      className="flex items-center justify-center w-11/12 text-3xl bg-white"
+      >
+        <StyledDateTimePicker 
+          mode="clock" 
+          value={new Date()} 
+          onChange={setHour}
+          display='spinner'
+          className='w-11/12'
+          />
+
+      </StyledView>
+
   </StyledView>
   </StyledSafeAreaView>  
   );
