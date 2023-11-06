@@ -1,11 +1,11 @@
 import Storage from '../utils/Storage';
 
 
-class TaskService {
+export const TaskService = {
     async getTasks(){
         const tasks = await Storage.getItem('tasks');
         return tasks ? JSON.parse(tasks) : [];
-    }
+    },
 
     async addTask(task) {
         let tasks = await this.getTasks();
@@ -14,5 +14,3 @@ class TaskService {
     }
 }
 
-
-export default TaskService;
