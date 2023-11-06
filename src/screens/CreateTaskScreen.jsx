@@ -1,90 +1,104 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'nativewind'
-import { SafeAreaView, View, TextInput } from 'react-native';
-import { Appbar, Text } from 'react-native-paper';
-import moment from 'moment';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { 
+  SafeAreaView, 
+  View, 
+  TouchableOpacity, 
+  Text, 
+  Alert
+} from 'react-native';
+import { Appbar } from 'react-native-paper';
+import TaskForm from '../components/TaskForm';
+import Task from '../models/Task';
+import { TaskService } from '../services/TaskService';
 
 const CreateTaskScreen = () => {
 
   const StyledSafeAreaView = styled(SafeAreaView);
   const StyledView = styled(View);
+  const StyledTouchableOpacity = styled(TouchableOpacity);
   const StyledText = styled(Text);
-  const StyledDateTimePicker = styled(DateTimePicker);
 
-  const [currentDate, setCurrentDate] = useState('');
-  const [task ,setTask] = useState('');
-  const [description, setDescription] = useState('');
-  const [hour, setHour] = useState('');
+
+  const [currentDate, setCurrentDate] = useState(new Date().toLocaleString('pt-BR'));
 
   useEffect(() => {
-    setInterval(
-      () => {
-        let date = moment().utcOffset('-03:00').locale('pt').format('LL');
-        setCurrentDate(date);
-      }
-    )
+
+    const date = new Date().toLocaleString('pt-BR').substr(0, 10);
+    setCurrentDate(date);
   });
 
+  const [formData, setFormData] = useState({
+    task: '',
+    deadLine: new Date(),
+  });
+
+  const { task, description, deadLine } = formData;
+
+  const setTask = value => setFormData(prevState => ({ ...prevState, task: value }));
+  const setDeadLine = value => setFormData(prevState => ({ ...prevState, deadLine: value }));
+
+  const handleTaskCreation = async () => {
+
+    const newTask = new Task(task, description, deadLine);
+
+    try {
+      await TaskService.addTask(newTask);
+      Alert.alert('Sucesso', 'Tarefa criada com sucesso!');
+    } catch (e) {
+      console.error(e.message);
+      Alert.alert('Erro', 'Falha ao criar a tarefa. Por favor, tente novamente.');
+    }
+
+    setFormData({
+      task: '',
+      deadLine: new Date(),
+    });
+
+  };
+
+
   return (
-  <StyledSafeAreaView>
-    <Appbar.Header 
-    className="flex flex-col items-start justify-center mt-0 mb-6">
-      <Text  
-      className="text-5xl font-bold text-blue-500 ml-7"
+    <StyledSafeAreaView>
+      <Appbar.Header
+        className="flex flex-col items-start justify-center mt-0 mb-6"
       >
-        Hoje.
-      </Text>
-      <Text
-      className="text-lg italic ml-7"
+        <Text
+          className="text-5xl font-bold text-blue-500 ml-7"
+        >
+          Hoje.
+        </Text>
+        <Text
+          className="text-lg italic ml-7"
+        >
+          {currentDate}
+        </Text>
+      </Appbar.Header>
+      <StyledView
+        className='flex items-center'
       >
-      { currentDate }
-      </Text>
-    </Appbar.Header>
-  <StyledView 
-  className='flex items-center justify-center p-6 bg'
-  >  
-    <StyledView
-      className='flex items-center justify-center w-11/12 py-6 bg-blue-600 rounded-t-3xl'
-      >
-      <StyledText
-      className="w-auto text-3xl font-bold text-white"
-      >
-      Criar nova Tarefa.
-      </StyledText>
-
-    </StyledView>
-    <StyledView
-    className='flex items-center justify-center w-11/12 bg-white'
-    >
-      <TextInput
-      placeholder='Título da tarefa'
-      onEndEditing={setTask}
-      className="w-2/3 p-3 border-b-2 border-gray-500 focus:border-black"
-      >
-      </TextInput>
-      <TextInput
-      placeholder='Descrição'
-      onEndEditing={setDescription}
-      className="w-2/3 p-3 border-b-2 border-gray-500 focus:border-black"
-      >
-      </TextInput>
-    </StyledView>
-    <StyledView
-      className="flex items-center justify-center w-11/12 text-3xl bg-white"
-      >
-        <StyledDateTimePicker 
-          mode="clock" 
-          value={new Date()} 
-          onChange={setHour}
-          display='spinner'
-          className='w-11/12'
+        <StyledView
+          className='flex items-center mt-5 bg-white rounded-3xl'
+        >
+          <TaskForm
+            task={formData.task}
+            deadLine={formData.deadLine}
+            setTask={setTask}
+            setDeadLine={setDeadLine}
           />
-
+          <StyledTouchableOpacity
+            className='px-20 py-3 mb-5 bg-blue-600 rounded-full'
+            onPress={handleTaskCreation}
+          >
+            <StyledText
+              className='text-2xl text-white'
+            >
+              Cadastrar Tarefa
+            </StyledText>
+          </StyledTouchableOpacity>
+        </StyledView>
       </StyledView>
-
-  </StyledView>
-  </StyledSafeAreaView>  
+    </StyledSafeAreaView>
   );
 };
 
