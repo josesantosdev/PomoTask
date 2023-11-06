@@ -6,6 +6,8 @@ import HomeScreen from "./src/screens/HomeScreen";
 import CreateTaskScreen from "./src/screens/CreateTaskScreen";
 import TimerScreen from "./src/screens/TimerScreen";
 import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { StatusBar } from "expo-status-bar"; 
+import styled from 'nativewind';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,15 +15,28 @@ export default function App(){
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator 
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: 'rgb(37 99 235)',
+            paddingTop:10,
+          }
+        }}
+        >
           <Tab.Screen 
-            name="Taks" 
+            name="Cadastro de Tarefas" 
             component={CreateTaskScreen}
             options={{
               tabBarLabel: 'Tasks',
               tabBarIcon: ({color, size}) => (
-                <FontAwesome name="tasks" size={24} color="black"/>
+                <FontAwesome name="tasks" size={24} color="white"/>
               ),
+              tabBarActiveTintColor: "white",
+              tabBarInactiveTintColor: "#D9D9D6",
+              tabBarLabelStyle: {
+                fontSize: 14,
+                margin: 0,
+              },
             }}
           />
           <Tab.Screen 
@@ -30,8 +45,14 @@ export default function App(){
             options={{
               tabBarLabel: 'Home',
               tabBarIcon: ({color, size}) => (
-                <Entypo name="home" size={24} color="black"/>
+                <Entypo name="home" size={24} color="white"/>
               ),
+              tabBarActiveTintColor: "white",
+              tabBarInactiveTintColor: "#D9D9D6",
+              tabBarLabelStyle: {
+                fontSize: 14,
+                margin: 0,
+              },
             }}
           />
           <Tab.Screen 
@@ -40,12 +61,19 @@ export default function App(){
             options={{
               tabBarLabel: 'Pomodoro',
               tabBarIcon: ({color, size}) => (
-                <Ionicons name="time-sharp" size={24} color="black"/>
+                <Ionicons name="time-sharp" size={24} color="white"/>
               ),
+              tabBarActiveTintColor: "white",
+              tabBarInactiveTintColor: "#D9D9D6",
+              tabBarLabelStyle: {
+                fontSize: 14,
+                margin: 0,
+              },
             }}
           />
         </Tab.Navigator>
       </NavigationContainer>
+      <StatusBar />
     </PaperProvider>  
   );
 };
