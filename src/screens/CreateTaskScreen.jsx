@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'nativewind'
-import { 
-  SafeAreaView, 
-  View, 
-  TouchableOpacity, 
-  Text, 
+import {
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+  Text,
   Alert
 } from 'react-native';
 import { Appbar } from 'react-native-paper';
@@ -39,6 +39,11 @@ const CreateTaskScreen = () => {
   const setDeadLine = value => setFormData(prevState => ({ ...prevState, deadLine: value }));
 
   const handleTaskCreation = async () => {
+
+    if (!formData.task) {
+      Alert.alert('Ops!', 'O campo de tarefa é obrigatório.');
+      return;
+    }
 
     const newTask = new Task(task, description, deadLine);
 

@@ -21,7 +21,6 @@ const TaskForm = ({
 }) => {
 
   const [taskText, setTaskText] = useState('');
-  const [descriptionText, setDescriptionText] = useState('');
 
   const handleTaskText = () => {
     setTask(taskText);
@@ -55,7 +54,7 @@ const TaskForm = ({
             onChangeText={(text) => setTaskText(text)}
             onEndEditing={handleTaskText}
             defaultValue={task}
-            maxLength={40}
+            maxLength={30}
             className="w-11/12 py-4 mb-5 text-lg border-b-2 border-gray-500 focus:border-black"
           >
           </TextInput>
