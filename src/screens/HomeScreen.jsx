@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { TaskService } from '../services/TaskService';
 import { useIsFocused } from "@react-navigation/native";
 import { styled } from 'nativewind'
@@ -30,6 +30,10 @@ const HomeScreen = () => {
     if (isFocused)
       fetchTasks();
   }, [isFocused]);
+
+const handleStartTask = async () => {
+  Alert.alert('Its working!')
+}
 
 
   return (
@@ -71,7 +75,7 @@ const HomeScreen = () => {
 
               <StyledTouchableOpacity
                 className='items-center justify-center'
-                onPress={}
+                onPress={handleStartTask}
 
               >
                 <StyledText
