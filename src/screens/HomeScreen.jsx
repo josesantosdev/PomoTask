@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { TaskService } from '../services/TaskService';
 import { useIsFocused } from "@react-navigation/native";
 import { styled } from 'nativewind'
@@ -7,7 +7,7 @@ import { Appbar } from 'react-native-paper';
 
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const StyledView = styled(View);
   const StyledText = styled(Text);
   const StyledTouchableOpacity = styled(TouchableOpacity);
@@ -22,7 +22,7 @@ const HomeScreen = () => {
     } catch (error) {
       console.error('Erro ao buscar as tarefas:', error);
     }
-  };
+  }
 
   useEffect(() => {
     if (isFocused)
@@ -73,6 +73,7 @@ const HomeScreen = () => {
               >
                 <StyledText
                   className='flex text-3xl text-green-400'
+                  onPress={() => navigation.navigate('Pomodoro')}
                 >
                   Go!
                 </StyledText>

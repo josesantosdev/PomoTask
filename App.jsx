@@ -2,12 +2,12 @@ import React from "react";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { CardStyleInterpolators } from '@react-navigation/stack'
 import HomeScreen from "./src/screens/HomeScreen";
 import CreateTaskScreen from "./src/screens/CreateTaskScreen";
 import TimerScreen from "./src/screens/TimerScreen";
 import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { StatusBar } from "expo-status-bar";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AdminScrean from "./src/screens/AdminScreen";
 
 
@@ -79,9 +79,9 @@ export default function App() {
             name="Admin"
             component={AdminScrean}
             options={{
-              tabBarLabel: 'Admin',
+              tabBarLabel: 'Config',
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="shield-sharp" size={24} color="white" />
+                <Ionicons name="cog-sharp" size={24} color="white" />
               ),
               tabBarActiveTintColor: "white",
               tabBarInactiveTintColor: "#D9D9D6",
